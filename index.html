@@ -1,0 +1,77 @@
+<div id="meme-container" style="text-align: center; font-family: 'Arial', sans-serif; padding: 30px 20px; max-width: 400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+    <!-- Fixed-Size GIF Container -->
+    <div style="height: 180px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+        <img src="https://media.tenor.com/kkxWF2DrTRIAAAAj/cat-meme-elgatitolover.gif" style="max-height: 180px; max-width: 100%; border-radius: 12px; object-fit: contain;" alt="Cute cat meme">
+    </div>
+    
+    <h2 id="main-text" style="color: #ff4d4d; font-size: 22px; margin-bottom: 30px;">Laura, will you go on another date with me?</h2>
+
+    <!-- Simple, Reliable Button Area -->
+    <div id="initial-buttons" style="display: flex; justify-content: center; align-items: center; gap: 20px; min-height: 60px;">
+        <button onclick="acceptDate()" style="background-color: #4CAF50; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer;">Yes! 🥰</button>
+        
+        <button id="no-btn" onmouseover="dodgeButton()" onclick="dodgeButton()" style="background-color: #f44336; color: white; border: none; padding: 12px 25px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.1s ease;">No 😢</button>
+    </div>
+</div>
+
+<script>
+let selectedAdventure = "";
+
+function dodgeButton() {
+    const noBtn = document.getElementById("no-btn");
+    noBtn.style.position = "absolute";
+    const randomX = (Math.random() - 0.5) * 250;
+    const randomY = (Math.random() - 0.5) * 150;
+    noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+}
+
+function acceptDate() {
+    const container = document.getElementById("meme-container");
+    container.innerHTML = `
+        <div style="height: 180px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+            <img src="https://media1.tenor.com/m/CarV7GDhiwQAAAAC/yippee-cat.gif" style="max-height: 180px; max-width: 100%; border-radius: 12px; object-fit: contain;" alt="Yippee cat">
+        </div>
+        <h2 style="color: #ff4d4d; font-size: 20px; margin-bottom: 15px;">Yay! Knew you'd say yes. 🥰</h2>
+        <p style="font-size: 15px; color: #333; margin-bottom: 15px; font-weight: bold;">Choose your adventure (Locks in Friday, Oct 9 @ 9 PM):</p>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%;">
+            <button onclick="chooseAndCalendar('Thrifting silly outfits & dinner ✨')" style="background: #ff4d4d; color: white; border: none; padding: 11px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 330px; font-size: 13px; text-align: center; line-height: 1.3;">✨ Thrift silliest outfits & dinner in them</button>
+            <button onclick="chooseAndCalendar('Ratatouille cooking session 🐀')" style="background: #ff4d4d; color: white; border: none; padding: 11px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 330px; font-size: 13px; text-align: center; line-height: 1.3;">🐀 Cook dinner while you are Ratatouille on my shoulders</button>
+            <button onclick="chooseAndCalendar('Bowling & kiss penalty 🎳')" style="background: #ff4d4d; color: white; border: none; padding: 11px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 330px; font-size: 13px; text-align: center; line-height: 1.3;">🎳 Bowling (kiss every time you hit a pin)</button>
+            <button onclick="chooseAndCalendar('Karaoke & soju feeding 🎤')" style="background: #ff4d4d; color: white; border: none; padding: 11px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 330px; font-size: 13px; text-align: center; line-height: 1.3;">🎤 Karaoke (my turn always + feed you soju)</button>
+        </div>
+    `;
+}
+
+function chooseAndCalendar(adventureName) {
+    selectedAdventure = adventureName;
+    
+    // Set for Friday, October 9, 2026, at 9:00 PM to 11:00 PM
+    const startStr = '2026-10-09T21:00:00';
+    const endStr = '2026-10-09T23:00:00';
+
+    const formatGoogleDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toISOString().replace(/-|:|\.\d\d\d/g, "");
+    };
+
+    const startFormatted = formatGoogleDate(startStr);
+    const endFormatted = formatGoogleDate(endStr);
+    const title = encodeURIComponent(`Date Night: ${selectedAdventure}`);
+    const details = encodeURIComponent(`Locked in via the ultimate date site! ❤️ Plans: ${selectedAdventure}`);
+    const guestEmail = "nikolas.cini13@outlook.com";
+
+    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startFormatted}/${endFormatted}&details=${details}&add=${guestEmail}`;
+
+    window.open(googleUrl, '_blank');
+
+    const container = document.getElementById("meme-container");
+    container.innerHTML = `
+        <div style="height: 180px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2Vyajl0emFmYXJsMWxzNmp0ZHY0ZGFkemhla2Z0MjZlZzBzMDl5NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5C4iFLME8BYS1duDuQ/giphy.gif" style="max-height: 180px; max-width: 100%; border-radius: 12px; object-fit: contain;" alt="Celebration GIF">
+        </div>
+        <h2 style="color: #ff4d4d; font-size: 22px; margin-bottom: 15px;">All Locked In! 🎉</h2>
+        <p style="font-size: 15px; color: #333; line-height: 1.5;">Friday, Oct 9 at 9:00 PM is saved. Calendar invite loaded up with you as a guest. Can't wait! 🥰</p>
+    `;
+}
+</script>
